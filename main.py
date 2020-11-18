@@ -19,7 +19,7 @@ selected_theme = 'dark_theme'
 class MelodySelect(QMainWindow):
     def __init__(self, theme):
         super().__init__()
-        uic.loadUi(f'{os.getcwd()}/windows/{theme}/music_window.ui', self)
+        uic.loadUi(f'{os.getcwd()}/components/{theme}/music_window.ui', self)
         self.setGeometry(400, 200, 300, 380)
         self.setFixedSize(300, 380)
         self.but = 'first.mp3'
@@ -37,14 +37,14 @@ class MelodySelect(QMainWindow):
 
     # метод для выставления мелодии по умолчанию
     def default_upload(self):
-        self.load_mp3(f'{os.getcwd()}/music/first.mp3')
+        self.load_mp3(f'{os.getcwd()}/assets/music/first.mp3')
         self.play.clicked.connect(self.player.play)
         self.stop.clicked.connect(self.player.stop)
 
     # выбор мелодии
     def select_music(self, button):
         self.but = button.text()
-        self.load_mp3(f'{os.getcwd()}/music/{button.text()}')
+        self.load_mp3(f'{os.getcwd()}/assets/music/{button.text()}')
         self.play.clicked.connect(self.player.play)
         self.stop.clicked.connect(self.player.stop)
 
@@ -65,14 +65,14 @@ class MelodySelect(QMainWindow):
 class ClockSelect(QMainWindow):
     def __init__(self, theme):
         super().__init__()
-        uic.loadUi(f'{os.getcwd()}/windows/{theme}/clock_menu.ui', self)
+        uic.loadUi(f'{os.getcwd()}/components/{theme}/clock_menu.ui', self)
         self.setGeometry(200, 100, 579, 578)
         self.setFixedSize(579, 578)
-        self.pixmap = QPixmap(f'{os.getcwd()}/images/analog_clock_photo.png')
+        self.pixmap = QPixmap(f'{os.getcwd()}/assets/images/analog_clock_photo.png')
         self.label.setPixmap(self.pixmap)
-        self.pixmap = QPixmap(f'{os.getcwd()}/images/Clock_12hour.png')
+        self.pixmap = QPixmap(f'{os.getcwd()}/assets/images/Clock_12hour.png')
         self.label_2.setPixmap(self.pixmap)
-        self.pixmap = QPixmap(f'{os.getcwd()}/images/Clock_24hour.png')
+        self.pixmap = QPixmap(f'{os.getcwd()}/assets/images/Clock_24hour.png')
         self.label_3.setPixmap(self.pixmap)
         self.but = 'Analog clock'
         self.buttonGroup.buttonClicked.connect(self.res_clock)
@@ -95,10 +95,10 @@ class ClockSelect(QMainWindow):
 class AboutProgramm(QMainWindow):
     def __init__(self, theme):
         super().__init__()
-        uic.loadUi(f'{os.getcwd()}/windows/{theme}/about_programm_window.ui', self)
+        uic.loadUi(f'{os.getcwd()}/components/{theme}/about_programm_window.ui', self)
         self.setGeometry(400, 200, 451, 243)
         self.setFixedSize(451, 243)
-        self.pixmap = QPixmap(f'{os.getcwd()}/images/logo.jpeg')
+        self.pixmap = QPixmap(f'{os.getcwd()}/assets/images/logo.jpeg')
         self.progect_logo.setPixmap(self.pixmap)
         self.ok_button.clicked.connect(self.close_window)
 
@@ -113,20 +113,20 @@ class AlarmClock(QMainWindow):
         self.setGeometry(350, 250, 511, 302)
         self.setFixedSize(511, 302)
         self.info = info
-        uic.loadUi(f'{os.getcwd()}/windows/{theme}/alarm_clock.ui', self)
+        uic.loadUi(f'{os.getcwd()}/components/{theme}/alarm_clock.ui', self)
         self.close_window_button.clicked.connect(self.close_window_action)
         self.ring()
 
     # метод для прозвона будильника
     def ring(self):
-        path = f'{os.getcwd()}/music/{self.info[1]}'
+        path = f'{os.getcwd()}/assets/music/{self.info[1]}'
         media = QtCore.QUrl.fromLocalFile(path)
         content = QtMultimedia.QMediaContent(media)
         self.player = QtMultimedia.QMediaPlayer()
         self.player.setMedia(content)
         self.player.play()
 
-        gif = QtGui.QMovie(f'{os.getcwd()}/images/alarm.gif')
+        gif = QtGui.QMovie(f'{os.getcwd()}/assets/images/alarm.gif')
         self.label.setMovie(gif)
         gif.start()
 
@@ -145,12 +145,12 @@ class AlarmClock(QMainWindow):
 class ChangeTheme(QMainWindow):
     def __init__(self, theme):
         super().__init__()
-        uic.loadUi(f'{os.getcwd()}/windows/{theme}/themes_window.ui', self)
+        uic.loadUi(f'{os.getcwd()}/components/{theme}/themes_window.ui', self)
         self.setGeometry(200, 200, 920, 441)
         self.setFixedSize(920, 441)
-        self.pixmap = QPixmap(f'{os.getcwd()}/images/light_theme.png')
+        self.pixmap = QPixmap(f'{os.getcwd()}/assets/images/light_theme.png')
         self.label.setPixmap(self.pixmap)
-        self.pixmap = QPixmap(f'{os.getcwd()}/images/dark_theme.png')
+        self.pixmap = QPixmap(f'{os.getcwd()}/assets/images/dark_theme.png')
         self.label_2.setPixmap(self.pixmap)
         self.current_theme = selected_theme
         self.buttonGroup.buttonClicked.connect(self.select_theme)
@@ -179,10 +179,10 @@ class MainWindow(QMainWindow):
     def __init__(self, theme):
         super().__init__()
         self.theme = theme
-        uic.loadUi(f'{os.getcwd()}/windows/{theme}/main_design.ui', self)
+        uic.loadUi(f'{os.getcwd()}/components/{theme}/main_design.ui', self)
         self.setGeometry(200, 100, 940, 580)
         self.setFixedSize(940, 580)
-        self.con = sqlite3.connect(f"{os.getcwd()}/alarms_base/events_list.db")
+        self.con = sqlite3.connect(f"{os.getcwd()}/assets/alarms_base/events_list.db")
 
         self.action_About_programm.triggered.connect(self.about_programm)
         self.action_About_programm.setShortcut(Qt.Key_F1)

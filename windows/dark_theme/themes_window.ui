@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ThemesWindow</class>
+ <widget class="QMainWindow" name="ThemesWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>920</width>
+    <height>441</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+	border-color: rgb(58, 255, 65);
+	color: rgb(255, 255, 255);
+	background-color: rgba(10, 10, 10, 100);
+}
+
+QMenu {
+	color: rgb(255, 255, 255);
+	background-color: rgb(10, 10, 10);
+}
+
+QWidget:item:selected {
+	color: rgb(0, 0, 0);
+    background-color: rgb(214, 214, 27);
+}
+
+QTableWidget {
+	gridline-color: rgb(255, 0, 0);
+	color: rgb(255, 255, 255);
+	background-color: rgb(10, 10, 10);
+	border-color: rgb(10, 10, 10);
+}
+
+QTableWidget::item:selected { 
+	color: rgb(0, 0, 0);
+	background-color: rgb(191, 186, 49);
+}
+
+QTextEdit {
+	color: rgb(255, 255, 255);
+	background-color: rgb(10, 10, 10);
+	border-color: rgb(10, 10, 10);
+}
+
+QDateTimeEdit {
+	color: rgb(255, 255, 255);
+	border-style: 1px rgb(10, 10, 10);
+	background-color: rgb(10, 10, 10);
+	qproperty-alignment: 'AlignHCenter | AlignCenter';
+	min-width: 75px;
+}
+
+QDateTimeEdit:up-button {
+    background-color: transparent;
+    subcontrol-origin: border;
+    subcontrol-position: center right;
+}
+
+QDateTimeEdit:down-button {
+    background-color: transparent;
+    subcontrol-origin: border;
+    subcontrol-position: center left;
+}
+
+QLineEdit {
+	color: rgb(255, 0, 4);
+	background-color: rgb(10, 10, 10);
+    border-style: solid;
+	border-color: rgb(10, 10, 60);
+}
+
+QLabel {
+	background-color: rgb(10, 10, 10);
+	border-color: rgb(10, 10, 10);
+	color: rgb(255, 255, 255);
+}
+
+QPushButton {
+	color: rgb(10, 10, 10);
+	background-color: rgb(214, 214, 27);
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed {
+	background-color: rgb(148, 139, 19);
+}
+
+QPushButton:hover {
+	border: 1px solid rgb(160, 201, 255);
+ 	color: rgb(255, 255, 255);
+}
+
+QTableCornerButton::section {
+  background-color: rgb(43, 43, 43);
+  border: 1px transparent #32414B;
+  border-radius: 0px;
+}
+
+QHeaderView {
+  background-color: rgb(43, 43, 43);
+  border: 0px transparent #32414B;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0px;
+}
+
+QHeaderView:disabled {
+  background-color: rgb(43, 43, 43);
+  border: 1px transparent #32414B;
+  padding: 2px;
+}
+
+QHeaderView::section {
+  background-color: rgb(43, 43, 43);
+  color: #F0F0F0;
+  padding: 2px;
+  border-radius: 0px;
+  text-align: left;
+}
+
+QHeaderView::section:checked {
+  color: #F0F0F0;
+  background-color: rgb(43, 43, 43);
+}
+
+QHeaderView::section:checked:disabled {
+  color: #787878;
+  background-color: rgb(43, 43, 43);
+}
+
+QHeaderView::section::horizontal {
+  padding-left: 4px;
+  padding-right: 4px;
+  border-left: 1px solid #19232D;
+}
+
+QHeaderView::section::horizontal::first, QHeaderView::section::horizontal::only-one {
+  border-left: 1px solid #32414B;
+}
+
+QHeaderView::section::horizontal:disabled {
+  color: #787878;
+}
+
+QHeaderView::section::vertical {
+  padding-left: 4px;
+  padding-right: 4px;
+  border-top: 1px solid #19232D;
+}
+
+QHeaderView::section::vertical::first, QHeaderView::section::vertical::only-one {
+  border-top: 1px solid #32414B;
+}
+
+QHeaderView::section::vertical:disabled {
+  color: #787878;
+}
+
+QRadioButton {
+	color: rgb(255, 255, 255);
+}
+
+QRadioButton::indicator {
+    width: 13px;
+    height: 13px;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>441</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>20</y>
+      <width>451</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="light_theme_button">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>330</y>
+      <width>112</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Light_theme</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">buttonGroup</string>
+    </attribute>
+   </widget>
+   <widget class="QRadioButton" name="dark_theme_button">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>330</y>
+      <width>112</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Dark_theme</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">buttonGroup</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="select_button">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>370</y>
+      <width>94</width>
+      <height>37</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Select</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
+</ui>

@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Qt_alarm_clock</class>
+ <widget class="QMainWindow" name="Qt_alarm_clock">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>935</width>
+    <height>578</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Qt Alarm Clock</string>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+	border-color: rgb(58, 255, 65);
+	color: rgb(255, 255, 255);
+	background-color: rgba(10, 10, 10, 100);
+}
+
+QMenu {
+	color: rgb(255, 255, 255);
+	background-color: rgb(10, 10, 10);
+}
+
+QWidget:item:selected {
+	color: rgb(0, 0, 0);
+    background-color: rgb(214, 214, 27);
+}
+
+QTableWidget {
+	gridline-color: rgb(255, 0, 0);
+	color: rgb(255, 255, 255);
+	background-color: rgb(10, 10, 10);
+	border-color: rgb(10, 10, 10);
+}
+
+QTableWidget::item:selected { 
+	color: rgb(0, 0, 0);
+	background-color: rgb(191, 186, 49);
+}
+
+QTextEdit {
+	color: rgb(255, 255, 255);
+	background-color: rgb(10, 10, 10);
+	border-color: rgb(10, 10, 10);
+}
+
+QDateTimeEdit {
+	color: rgb(255, 255, 255);
+	border-style: 1px rgb(10, 10, 10);
+	background-color: rgb(10, 10, 10);
+	qproperty-alignment: 'AlignHCenter | AlignCenter';
+	min-width: 75px;
+}
+
+QDateTimeEdit:up-button {
+    background-color: transparent;
+    subcontrol-origin: border;
+    subcontrol-position: center right;
+}
+
+QDateTimeEdit:down-button {
+    background-color: transparent;
+    subcontrol-origin: border;
+    subcontrol-position: center left;
+}
+
+QLineEdit {
+	color: rgb(255, 0, 4);
+	background-color: rgb(10, 10, 10);
+    border-style: solid;
+	border-color: rgb(10, 10, 60);
+}
+
+QLabel {
+	background-color: rgba(10, 10, 10, 0);
+	border-color: rgb(10, 10, 10);
+	color: rgb(255, 255, 255);
+}
+
+QPushButton {
+	color: rgb(10, 10, 10);
+	background-color: rgb(214, 214, 27);
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed {
+	background-color: rgb(148, 139, 19);
+}
+
+QPushButton:hover {
+	border: 1px solid rgb(160, 201, 255);
+ 	color: rgb(255, 255, 255);
+}
+
+QTableCornerButton::section {
+  background-color: rgb(43, 43, 43);
+  border: 1px transparent #32414B;
+  border-radius: 0px;
+}
+
+/**/
+QHeaderView {
+  background-color: rgb(43, 43, 43);
+  border: 0px transparent #32414B;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0px;
+}
+
+QHeaderView:disabled {
+  background-color: rgb(43, 43, 43);
+  border: 1px transparent #32414B;
+  padding: 2px;
+}
+
+QHeaderView::section {
+  background-color: rgb(43, 43, 43);
+  color: #F0F0F0;
+  padding: 2px;
+  border-radius: 0px;
+  text-align: left;
+}
+
+QHeaderView::section:checked {
+  color: #F0F0F0;
+  background-color: rgb(43, 43, 43);
+}
+
+QHeaderView::section:checked:disabled {
+  color: #787878;
+  background-color: rgb(43, 43, 43);
+}
+
+QHeaderView::section::horizontal {
+  padding-left: 4px;
+  padding-right: 4px;
+  border-left: 1px solid #19232D;
+}
+
+QHeaderView::section::horizontal::first, QHeaderView::section::horizontal::only-one {
+  border-left: 1px solid #32414B;
+}
+
+QHeaderView::section::horizontal:disabled {
+  color: #787878;
+}
+
+QHeaderView::section::vertical {
+  padding-left: 4px;
+  padding-right: 4px;
+  border-top: 1px solid #19232D;
+}
+
+QHeaderView::section::vertical::first, QHeaderView::section::vertical::only-one {
+  border-top: 1px solid #32414B;
+}
+
+QHeaderView::section::vertical:disabled {
+  color: #787878;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>341</width>
+      <height>184</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QDateTimeEdit" name="alarm_time"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="text">
+        <string>Add a description:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTextEdit" name="descriptions"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="add_alarm_button">
+         <property name="text">
+          <string>Add alarm</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="change_alarm_button">
+         <property name="text">
+          <string>Change alarm</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="change_clock_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>520</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Change clock</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>461</y>
+      <width>171</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Selected melody:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="melody_name_line">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>10</y>
+      <width>571</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>Alarm list</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="alarms_list_table">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="change_melody_button">
+    <property name="geometry">
+     <rect>
+      <x>178</x>
+      <y>520</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Change melody</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="update_alarm_button">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>520</y>
+      <width>281</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Update alarm</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="delete_alarm_button">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>520</y>
+      <width>281</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete alarm</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>935</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>Programm</string>
+    </property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuMain">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="action_About_programm"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="action_Themes"/>
+   </widget>
+   <addaction name="menuAbout"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuMain"/>
+  </widget>
+  <action name="action_About_programm">
+   <property name="text">
+    <string>&amp;About programm</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="action_Themes">
+   <property name="text">
+    <string>&amp;Themes</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

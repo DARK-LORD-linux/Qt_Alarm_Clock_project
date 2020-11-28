@@ -117,6 +117,10 @@ class AlarmClock(QMainWindow):
         self.close_window_button.clicked.connect(self.close_window_action)
         self.ring()
 
+        self.mel = QTimer()
+        self.mel.timeout.connect(self.player_status)
+        self.mel.start(1000)
+
     # метод для прозвона будильника
     def ring(self):
         path = f'{os.getcwd()}/assets/music/{self.info[1]}'
@@ -133,10 +137,15 @@ class AlarmClock(QMainWindow):
         self.time.setText(self.info[0][:-3])
         self.message.setPlainText(self.info[-1])
 
+    def player_status(self):
+        if self.player.state() == 0:
+            self.player.play()
+
     def close_window_action(self):
         self.close()
 
     def closeEvent(self, event):
+        self.mel.stop()
         self.player.stop()
         event.accept()
 
@@ -261,7 +270,7 @@ class MainWindow(QMainWindow):
         cur = self.con.cursor()
         self.result = cur.execute(f"""SELECT * FROM event 
                                   WHERE time_and_date = '{ids}'""").fetchall()
-        self.descriptions.setPlainText(self.result[0][2])
+        self.descriptions.setPlainText(str(self.result[0][2]))
         self.alarm_time.setDateTime(datetime.strptime(self.result[0][0], '%Y-%m-%d %H:%M:%S'))
         selected_melody_name = self.result[0][1][:]
 
@@ -387,7 +396,7 @@ class MainWindow(QMainWindow):
                 self.hours24_clock()
             painted_clock_name = selected_clock_name[:]
 
-    # метод для отрисовки 12-часовых часов
+    # метод для отрисовки цифрового циферблата, с форматов времени 12 часов
     def hours12_clock(self):
         fnt = QFont('Jet Brains Mono', 40, QFont.Bold)
  
@@ -408,7 +417,7 @@ class MainWindow(QMainWindow):
         self.clock.setText(displayTxt1)
         self.clock.show()
 
-    # метод для создания 24-часовых часов
+    # метод для создания цифрового циферблата, с форматом времени 24 часа
     def hours24_clock(self):
         fnt = QFont('Jet Brains Mono', 45, QFont.Bold)
  
@@ -434,7 +443,6 @@ class MainWindow(QMainWindow):
         self.timer = QTimer(self) 
         self.timer.timeout.connect(self.update)
         self.timer.start(1000)
-        # self.setStyleSheet("background : black;")
 
         # создание часовой стрелки
         self.hPointer = QtGui.QPolygon([QPoint(6, 7), 
@@ -459,9 +467,6 @@ class MainWindow(QMainWindow):
     # метод для события рисования
     def paintEvent(self, event):
         if self.paint:
-            # получаем минимальные размерв окна, чтобы часы всегда оставались квадратными
-            rec = min(self.width(), self.height())
- 
             tik = QTime.currentTime() 
  
             # создаём объект рисования

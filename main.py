@@ -22,6 +22,7 @@ class MelodySelect(QMainWindow):
         uic.loadUi(f'{os.getcwd()}/components/{theme}/music_window.ui', self)
         self.setGeometry(400, 200, 300, 380)
         self.setFixedSize(300, 380)
+        self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.but = 'first.mp3'
         self.buttonGroup.buttonClicked.connect(self.select_music)
         self.select_melody.clicked.connect(self.open_main_window)
@@ -98,6 +99,7 @@ class AboutProgramm(QMainWindow):
         uic.loadUi(f'{os.getcwd()}/components/{theme}/about_programm_window.ui', self)
         self.setGeometry(400, 200, 451, 243)
         self.setFixedSize(451, 243)
+        self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.pixmap = QPixmap(f'{os.getcwd()}/assets/images/logo.jpeg')
         self.progect_logo.setPixmap(self.pixmap)
         self.ok_button.clicked.connect(self.close_window)
@@ -112,6 +114,7 @@ class AlarmClock(QMainWindow):
         super().__init__()
         self.setGeometry(350, 250, 511, 302)
         self.setFixedSize(511, 302)
+        self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.info = info
         uic.loadUi(f'{os.getcwd()}/components/{theme}/alarm_clock.ui', self)
         self.close_window_button.clicked.connect(self.close_window_action)
@@ -183,6 +186,75 @@ class ChangeTheme(QMainWindow):
         event.accept()
 
 
+# класс окна добавления/изменения будильника
+class CreateChangeAlarm(QMainWindow):
+    def __init__(self, theme, result=False, time=False):
+        super().__init__()
+        self.theme = theme
+        self.result = result
+        self.time = time
+        uic.loadUi(f'{os.getcwd()}/components/{theme}/change_alarm_window.ui', self)
+        self.setGeometry(400, 150, 383, 463)
+        self.setFixedSize(383, 463)
+        self.con = sqlite3.connect(f"{os.getcwd()}/assets/alarms_base/events_list.db")
+        self.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.change_melody_button.clicked.connect(self.show_melody_select_menu)
+        self.apply_button.clicked.connect(self.apply_action)
+
+        self.melody_name_line.setText(selected_melody_name)
+        self.alarm_time.setDateTime(datetime.now())
+
+        # таймер для проверки статуса мелодии
+        self.music_clock_name_timer = QTimer()
+        self.music_clock_name_timer.timeout.connect(self.mel_name)
+        self.music_clock_name_timer.start(1)
+
+        if self.result:
+            self.descriptions.setPlainText(str(self.result[0][2]))
+            self.alarm_time.setDateTime(datetime.strptime(self.result[0][0], '%Y-%m-%d %H:%M:%S'))
+
+    # метод для показывания окна выбора мелодии
+    def show_melody_select_menu(self):
+        self.window = MelodySelect(self.theme)
+        self.window.show()
+
+    # метод для изменения текущей мелодии в поле
+    def mel_name(self):
+        self.melody_name_line.setText(selected_melody_name)
+
+    # метод вызова нужного метода изменения/добавления будильника
+    def apply_action(self):
+        global alarms_changed
+        if self.result:
+            self.upload_changes()
+        else:
+            self.add_alarm()
+        self.music_clock_name_timer.stop()
+        self.close()
+
+    # метод для загрузки изменений будильников в базу данных
+    def upload_changes(self):
+        cur = self.con.cursor()
+        if self.result:
+            cur.execute(f"""UPDATE event SET time_and_date=
+                        '{self.alarm_time.dateTime().toString('yyyy-MM-dd hh:mm:00')}', 
+                        melody='{self.melody_name_line.text()}',
+                        notes='{self.descriptions.toPlainText()}'
+                        WHERE time_and_date = '{self.result[0][0]}'""")
+        self.con.commit()
+
+    # метод для добавления будильника
+    def add_alarm(self):
+        cur = self.con.cursor()
+        time = self.alarm_time.dateTime().toString('yyyy-MM-dd hh:mm:00')
+        includes = cur.execute(f"""select time_and_date from event 
+                               where time_and_date = '{time}'""").fetchall()
+        if len(includes) == 0:
+            cur.execute(f"""INSERT INTO event(time_and_date, melody, notes) VALUES('{time}',
+                        '{selected_melody_name}', '{self.descriptions.toPlainText()}')""")
+            self.con.commit()
+
+
 # класс основного окна
 class MainWindow(QMainWindow):
     def __init__(self, theme):
@@ -190,7 +262,7 @@ class MainWindow(QMainWindow):
         self.theme = theme
         uic.loadUi(f'{os.getcwd()}/components/{theme}/main_design.ui', self)
         self.setGeometry(200, 100, 940, 580)
-        self.setFixedSize(940, 580)
+        self.setFixedSize(935, 529)
         self.con = sqlite3.connect(f"{os.getcwd()}/assets/alarms_base/events_list.db")
 
         self.action_About_programm.triggered.connect(self.about_programm)
@@ -202,28 +274,19 @@ class MainWindow(QMainWindow):
         self.actionQuit.setShortcut(QKeySequence('Ctrl+Q'))
 
         self.add_alarm_button.clicked.connect(self.add_alarm)
-        self.change_melody_button.clicked.connect(self.show_melody_select_menu)
         self.change_clock_button.clicked.connect(self.show_select_clock)
         self.delete_alarm_button.clicked.connect(self.delete_alarm)
-        self.update_alarm_button.clicked.connect(self.upload_alarms)
-        self.change_alarm_button.clicked.connect(self.upload_changes)
-        self.alarms_list_table.itemClicked.connect(self.alarm_change)
+        self.alarms_list_table.itemDoubleClicked.connect(self.alarm_change)
 
-        self.melody_name_line.setText(selected_melody_name)
-        self.alarm_time.setDateTime(datetime.now())
         self.paint = False
         self.clock = False
         self.themes_work = False
+        self.result = False
         self.painted_clock_name = ''
         self.draw_a_clock()
         self.upload_alarms()
 
-        # таймер для проверки статуса мелодии
-        self.music_clock_name_timer = QTimer()
-        self.music_clock_name_timer.timeout.connect(self.mel_name)
-        self.music_clock_name_timer.start(1)
-
-        # таймер для проверки статуса часов
+        # таймер для проверки статуса часов и изменений базы данных
         self.painted_clock = QTimer()
         self.painted_clock.timeout.connect(self.clock_status)
         self.painted_clock.start(500)
@@ -232,20 +295,6 @@ class MainWindow(QMainWindow):
         self.check_timer = QTimer()
         self.check_timer.timeout.connect(self.check_time)
         self.check_timer.start(1000)
-
-    # метод для загрузки изменений будильников в базу данных
-    def upload_changes(self):
-        cur = self.con.cursor()
-        if self.result:
-            cur.execute(f"""UPDATE event SET time_and_date=
-                        '{self.alarm_time.dateTime().toString('yyyy-MM-dd hh:mm:00')}', 
-                        melody='{self.melody_name_line.text()}',
-                        notes='{self.descriptions.toPlainText()}'
-                        WHERE time_and_date = '{self.result[0][0]}'""")
-        self.alarm_time.setDateTime(datetime.now())
-        self.descriptions.clear()
-        self.con.commit()
-        self.upload_alarms()
 
     # метод для прозвона будильника
     def check_time(self):
@@ -270,23 +319,15 @@ class MainWindow(QMainWindow):
         cur = self.con.cursor()
         self.result = cur.execute(f"""SELECT * FROM event 
                                   WHERE time_and_date = '{ids}'""").fetchall()
-        self.descriptions.setPlainText(str(self.result[0][2]))
-        self.alarm_time.setDateTime(datetime.strptime(self.result[0][0], '%Y-%m-%d %H:%M:%S'))
+        time = datetime.strptime(self.result[0][0], '%Y-%m-%d %H:%M:%S')
+        self.window = CreateChangeAlarm(self.theme, self.result, time)
+        self.window.show()
         selected_melody_name = self.result[0][1][:]
 
-    # метод для добавления будильника
+    # метод для вызова окна добавления будильника
     def add_alarm(self):
-        cur = self.con.cursor()
-        time = self.alarm_time.dateTime().toString('yyyy-MM-dd hh:mm:00')
-        includes = cur.execute(f"""select time_and_date from event 
-                               where time_and_date = '{time}'""").fetchall()
-        if len(includes) == 0:
-            cur.execute(f"""INSERT INTO event(time_and_date, melody, notes) VALUES('{time}',
-                        '{selected_melody_name}', '{self.descriptions.toPlainText()}')""")
-            self.descriptions.clear()
-            # Получили результат запроса, который ввели в текстовое поле
-            self.upload_alarms()
-            self.con.commit()
+        self.window = CreateChangeAlarm(self.theme)
+        self.window.show()
 
     # метод для загрузки будильников из базы данных в таблицу
     def upload_alarms(self):
@@ -307,7 +348,6 @@ class MainWindow(QMainWindow):
         header = self.alarms_list_table.horizontalHeader()
         title = ['time_and_date', 'melody', 'notes']
         self.alarms_list_table.setHorizontalHeaderLabels(title)
-        self.descriptions.clear()
         self.result = []
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
@@ -329,23 +369,15 @@ class MainWindow(QMainWindow):
             cur.execute("DELETE FROM event WHERE time_and_date IN (" + ", ".join(
                 '?' * len(ids)) + ")", ids)
             self.con.commit()
-            self.descriptions.clear()
         self.upload_alarms()
 
     def clock_status(self):
+        self.upload_alarms()
         self.draw_a_clock()
-
-    def mel_name(self):
-        self.melody_name_line.setText(selected_melody_name)
 
     # метод для показывания окна выбора часов
     def show_select_clock(self):
         self.window = ClockSelect(self.theme)
-        self.window.show()
-
-    # метод для показывания окна выбора мелодии
-    def show_melody_select_menu(self):
-        self.window = MelodySelect(self.theme)
         self.window.show()
 
     # метод для отрисовки окна "О программе"
@@ -402,7 +434,7 @@ class MainWindow(QMainWindow):
  
         self.clock = QLabel(self)
         self.clock.setFont(fnt)
-        self.clock.move(10, 250)
+        self.clock.move(15, 250)
         self.clock.resize(340, 145)
 
         self.timer = QTimer(self)
@@ -423,12 +455,12 @@ class MainWindow(QMainWindow):
  
         self.clock = QLabel(self)
         self.clock.setFont(fnt)
-        self.clock.move(20, 250)
+        self.clock.move(25, 250)
         self.clock.resize(320, 145)
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.showTime_24hour)
-        self.timer.start(1000)  # update every second
+        self.timer.start(1000)  # обновлется каждую секунду
  
         self.showTime_24hour()
  
@@ -496,8 +528,7 @@ class MainWindow(QMainWindow):
             drawPointer(self.sColor, (6 * tik.second()), self.sPointer) 
       
             # рисуем фон
-            painter.setPen(QPen(self.bColor)) 
-      
+            painter.setPen(QPen(self.bColor))  
             for i in range(0, 60): 
                 # рисуем стрелки на фоне
                 if (i % 5) == 0: 

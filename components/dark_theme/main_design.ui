@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>935</width>
-    <height>578</height>
+    <height>529</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -183,98 +183,79 @@ QHeaderView::section::vertical:disabled {
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>341</width>
-      <height>184</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QDateTimeEdit" name="alarm_time"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="text">
-        <string>Add a description:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QTextEdit" name="descriptions"/>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QPushButton" name="add_alarm_button">
-         <property name="text">
-          <string>Add alarm</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="change_alarm_button">
-         <property name="text">
-          <string>Change alarm</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
    <widget class="QPushButton" name="change_clock_button">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>520</y>
-      <width>161</width>
+      <y>470</y>
+      <width>341</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Change clock</string>
     </property>
    </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_2">
+   <widget class="QPushButton" name="add_alarm_button">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>461</y>
-      <width>171</width>
-      <height>51</height>
+      <x>10</x>
+      <y>80</y>
+      <width>341</width>
+      <height>41</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Selected melody:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="melody_name_line">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Create new alarm</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="delete_alarm_button">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>470</y>
+      <width>571</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete alarm</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>341</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'JetBrains Mono'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;If you want to change an existing alarm clock, double-click on it`s entry in the table.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget_3">
     <property name="geometry">
      <rect>
       <x>360</x>
-      <y>10</y>
+      <y>0</y>
       <width>571</width>
-      <height>501</height>
+      <height>461</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -326,48 +307,15 @@ QHeaderView::section::vertical:disabled {
        <property name="enabled">
         <bool>true</bool>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QPushButton" name="change_melody_button">
-    <property name="geometry">
-     <rect>
-      <x>178</x>
-      <y>520</y>
-      <width>171</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Change melody</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="update_alarm_button">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>520</y>
-      <width>281</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Update alarm</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="delete_alarm_button">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>520</y>
-      <width>281</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Delete alarm</string>
-    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

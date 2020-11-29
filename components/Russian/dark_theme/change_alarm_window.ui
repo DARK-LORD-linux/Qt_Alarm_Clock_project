@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Alarm_menu</class>
+ <widget class="QMainWindow" name="Alarm_menu">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>378</width>
+    <height>463</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Добавить/изменить будильник</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+	border-color: rgb(58, 255, 65);
+	color: rgb(255, 255, 255);
+	background-color: rgba(10, 10, 10, 100);
+}
+
+QMenu {
+	color: rgb(255, 255, 255);
+	background-color: rgb(10, 10, 10);
+}
+
+QWidget:item:selected {
+	color: rgb(0, 0, 0);
+    background-color: rgb(214, 214, 27);
+}
+
+QTableWidget {
+	gridline-color: rgb(255, 0, 0);
+	color: rgb(255, 255, 255);
+	background-color: rgb(10, 10, 10);
+	border-color: rgb(10, 10, 10);
+}
+
+QTableWidget::item:selected { 
+	color: rgb(0, 0, 0);
+	background-color: rgb(191, 186, 49);
+}
+
+QTextEdit {
+	color: rgb(255, 255, 255);
+	background-color: rgb(10, 10, 10);
+	border-color: rgb(10, 10, 10);
+}
+
+QDateTimeEdit {
+	color: rgb(255, 255, 255);
+	border-style: 1px rgb(10, 10, 10);
+	background-color: rgb(10, 10, 10);
+	qproperty-alignment: 'AlignHCenter | AlignCenter';
+	min-width: 75px;
+}
+
+QDateTimeEdit:up-button {
+    background-color: transparent;
+    subcontrol-origin: border;
+    subcontrol-position: center right;
+}
+
+QDateTimeEdit:down-button {
+    background-color: transparent;
+    subcontrol-origin: border;
+    subcontrol-position: center left;
+}
+
+QLineEdit {
+	color: rgb(255, 0, 4);
+	background-color: rgb(10, 10, 10);
+    border-style: solid;
+	border-color: rgb(10, 10, 60);
+}
+
+QLabel {
+	background-color: rgba(10, 10, 10, 0);
+	border-color: rgb(10, 10, 10);
+	color: rgb(255, 255, 255);
+}
+
+QPushButton {
+	color: rgb(10, 10, 10);
+	background-color: rgb(214, 214, 27);
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed {
+	background-color: rgb(148, 139, 19);
+}
+
+QPushButton:hover {
+	border: 1px solid rgb(160, 201, 255);
+ 	color: rgb(255, 255, 255);
+}
+
+QTableCornerButton::section {
+  background-color: rgb(43, 43, 43);
+  border: 1px transparent #32414B;
+  border-radius: 0px;
+}
+
+/**/
+QHeaderView {
+  background-color: rgb(43, 43, 43);
+  border: 0px transparent #32414B;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0px;
+}
+
+QHeaderView:disabled {
+  background-color: rgb(43, 43, 43);
+  border: 1px transparent #32414B;
+  padding: 2px;
+}
+
+QHeaderView::section {
+  background-color: rgb(43, 43, 43);
+  color: #F0F0F0;
+  padding: 2px;
+  border-radius: 0px;
+  text-align: left;
+}
+
+QHeaderView::section:checked {
+  color: #F0F0F0;
+  background-color: rgb(43, 43, 43);
+}
+
+QHeaderView::section:checked:disabled {
+  color: #787878;
+  background-color: rgb(43, 43, 43);
+}
+
+QHeaderView::section::horizontal {
+  padding-left: 4px;
+  padding-right: 4px;
+  border-left: 1px solid #19232D;
+}
+
+QHeaderView::section::horizontal::first, QHeaderView::section::horizontal::only-one {
+  border-left: 1px solid #32414B;
+}
+
+QHeaderView::section::horizontal:disabled {
+  color: #787878;
+}
+
+QHeaderView::section::vertical {
+  padding-left: 4px;
+  padding-right: 4px;
+  border-top: 1px solid #19232D;
+}
+
+QHeaderView::section::vertical::first, QHeaderView::section::vertical::only-one {
+  border-top: 1px solid #32414B;
+}
+
+QHeaderView::section::vertical:disabled {
+  color: #787878;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QDateTimeEdit" name="alarm_time">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>361</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="descriptions">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>160</y>
+      <width>361</width>
+      <height>151</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>140</y>
+      <width>191</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Добавьте описание:</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>320</y>
+      <width>171</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Выбранная мелодия:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="melody_name_line">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="change_melody_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>320</y>
+      <width>181</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Изменить мелодию</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="apply_button">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>400</y>
+      <width>94</width>
+      <height>37</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Применить</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>211</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Выберите время будильника:</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

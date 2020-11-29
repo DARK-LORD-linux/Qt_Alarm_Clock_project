@@ -13,13 +13,14 @@ from PyQt5.QtWidgets import QMainWindow, QMessageBox, QTableWidgetItem, QLabel, 
 selected_melody_name = 'first.mp3'
 selected_clock_name = 'Analog clock'
 selected_theme = 'dark_theme'
+selected_language = 'English'
 
 
 # класс окна для выбора мелодии
 class MelodySelect(QMainWindow):
-    def __init__(self, theme):
+    def __init__(self, theme, language):
         super().__init__()
-        uic.loadUi(f'{os.getcwd()}/components/{theme}/music_window.ui', self)
+        uic.loadUi(f'{os.getcwd()}/components/{language}/{theme}/music_window.ui', self)
         self.setGeometry(400, 200, 300, 380)
         self.setFixedSize(300, 380)
         self.setWindowModality(QtCore.Qt.ApplicationModal)
@@ -64,9 +65,9 @@ class MelodySelect(QMainWindow):
 
 # класс окна выбора циферлатов
 class ClockSelect(QMainWindow):
-    def __init__(self, theme):
+    def __init__(self, theme, language):
         super().__init__()
-        uic.loadUi(f'{os.getcwd()}/components/{theme}/clock_menu.ui', self)
+        uic.loadUi(f'{os.getcwd()}/components/{language}/{theme}/clock_menu.ui', self)
         self.setGeometry(200, 100, 579, 578)
         self.setFixedSize(579, 578)
         self.pixmap = QPixmap(f'{os.getcwd()}/assets/images/analog_clock_photo.png')
@@ -94,9 +95,9 @@ class ClockSelect(QMainWindow):
 
 # класс окна "О программе"
 class AboutProgramm(QMainWindow):
-    def __init__(self, theme):
+    def __init__(self, theme, language):
         super().__init__()
-        uic.loadUi(f'{os.getcwd()}/components/{theme}/about_programm_window.ui', self)
+        uic.loadUi(f'{os.getcwd()}/components/{language}/{theme}/about_programm_window.ui', self)
         self.setGeometry(400, 200, 451, 243)
         self.setFixedSize(451, 243)
         self.setWindowModality(QtCore.Qt.ApplicationModal)
@@ -108,15 +109,36 @@ class AboutProgramm(QMainWindow):
         self.close()
 
 
+# класс окна выбора языка
+class SelectLanguage(QMainWindow):
+    def __init__(self, theme, language):
+        super().__init__()
+        uic.loadUi(f'{os.getcwd()}/components/{language}/{theme}/language_menu_window.ui', self)
+        self.setGeometry(400, 200, 393, 103)
+        self.setFixedSize(393, 103)
+        self.language_list.setCurrentRow(0)
+        self.select_button.clicked.connect(self.select_language)
+        
+    def select_language(self):
+        global selected_language
+        selected_language = self.language_list.selectedItems()[0].text()
+        self.close()
+
+    def closeEvent(self, event):
+        self.window = MainWindow(selected_theme, selected_language)
+        self.window.show()
+        event.accept()
+
+
 # класс окна прозвона будильника
 class AlarmClock(QMainWindow):
-    def __init__(self, info, theme):
+    def __init__(self, info, theme, language):
         super().__init__()
         self.setGeometry(350, 250, 511, 302)
         self.setFixedSize(511, 302)
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.info = info
-        uic.loadUi(f'{os.getcwd()}/components/{theme}/alarm_clock.ui', self)
+        uic.loadUi(f'{os.getcwd()}/components/{language}/{theme}/alarm_clock.ui', self)
         self.close_window_button.clicked.connect(self.close_window_action)
         self.ring()
 
@@ -155,9 +177,9 @@ class AlarmClock(QMainWindow):
 
 # класс выбора тем
 class ChangeTheme(QMainWindow):
-    def __init__(self, theme):
+    def __init__(self, theme, language):
         super().__init__()
-        uic.loadUi(f'{os.getcwd()}/components/{theme}/themes_window.ui', self)
+        uic.loadUi(f'{os.getcwd()}/components/{language}/{theme}/themes_window.ui', self)
         self.setGeometry(200, 200, 920, 441)
         self.setFixedSize(920, 441)
         self.pixmap = QPixmap(f'{os.getcwd()}/assets/images/light_theme.png')
@@ -181,19 +203,20 @@ class ChangeTheme(QMainWindow):
             self.change_theme()
 
     def closeEvent(self, event):
-        self.window = MainWindow(selected_theme)
+        self.window = MainWindow(selected_theme, selected_language)
         self.window.show()
         event.accept()
 
 
 # класс окна добавления/изменения будильника
 class CreateChangeAlarm(QMainWindow):
-    def __init__(self, theme, result=False, time=False):
+    def __init__(self, theme, language, result=False, time=False):
         super().__init__()
         self.theme = theme
         self.result = result
         self.time = time
-        uic.loadUi(f'{os.getcwd()}/components/{theme}/change_alarm_window.ui', self)
+        self.language = language
+        uic.loadUi(f'{os.getcwd()}/components/{language}/{theme}/change_alarm_window.ui', self)
         self.setGeometry(400, 150, 383, 463)
         self.setFixedSize(383, 463)
         self.con = sqlite3.connect(f"{os.getcwd()}/assets/alarms_base/events_list.db")
@@ -215,7 +238,7 @@ class CreateChangeAlarm(QMainWindow):
 
     # метод для показывания окна выбора мелодии
     def show_melody_select_menu(self):
-        self.window = MelodySelect(self.theme)
+        self.window = MelodySelect(self.theme, self.language)
         self.window.show()
 
     # метод для изменения текущей мелодии в поле
@@ -257,13 +280,16 @@ class CreateChangeAlarm(QMainWindow):
 
 # класс основного окна
 class MainWindow(QMainWindow):
-    def __init__(self, theme):
+    def __init__(self, theme, language):
         super().__init__()
         self.theme = theme
-        uic.loadUi(f'{os.getcwd()}/components/{theme}/main_design.ui', self)
+        self.language = language
+        uic.loadUi(f'{os.getcwd()}/components/{language}/{theme}/main_design.ui', self)
         self.setGeometry(200, 100, 940, 580)
         self.setFixedSize(935, 529)
         self.con = sqlite3.connect(f"{os.getcwd()}/assets/alarms_base/events_list.db")
+
+        self.action_Language.triggered.connect(self.select_language)
 
         self.action_About_programm.triggered.connect(self.about_programm)
         self.action_About_programm.setShortcut(Qt.Key_F1)
@@ -281,6 +307,7 @@ class MainWindow(QMainWindow):
         self.paint = False
         self.clock = False
         self.themes_work = False
+        self.language_work = False
         self.result = False
         self.painted_clock_name = ''
         self.draw_a_clock()
@@ -302,7 +329,7 @@ class MainWindow(QMainWindow):
         result = cur.execute(f"""SELECT * FROM event WHERE time_and_date =
                              '{str(datetime.now()).split('.')[0]}'""").fetchall()
         if len(result) != 0:
-            self.window = AlarmClock(result[0], selected_theme)
+            self.window = AlarmClock(result[0], selected_theme, selected_language)
             self.window.show()
             # удаляем будильник, которые прозвенел, из базы данных
             cur.execute(f"DELETE FROM event WHERE time_and_date = '{result[0][0]}'")
@@ -320,13 +347,13 @@ class MainWindow(QMainWindow):
         self.result = cur.execute(f"""SELECT * FROM event 
                                   WHERE time_and_date = '{ids}'""").fetchall()
         time = datetime.strptime(self.result[0][0], '%Y-%m-%d %H:%M:%S')
-        self.window = CreateChangeAlarm(self.theme, self.result, time)
+        self.window = CreateChangeAlarm(self.theme, self.language, self.result, time)
         self.window.show()
         selected_melody_name = self.result[0][1][:]
 
     # метод для вызова окна добавления будильника
     def add_alarm(self):
-        self.window = CreateChangeAlarm(self.theme)
+        self.window = CreateChangeAlarm(self.theme, self.language)
         self.window.show()
 
     # метод для загрузки будильников из базы данных в таблицу
@@ -359,9 +386,14 @@ class MainWindow(QMainWindow):
         rows = list(set([i.row() for i in self.alarms_list_table.selectedItems()]))
         ids = [self.alarms_list_table.item(i, 0).text() for i in rows]
         # Спрашиваем у пользователя подтверждение на удаление элементов
-        valid = QMessageBox.question(
-            self, '', "Do you really want to delete alarms with time(s): " + ", ".join(ids),
-            QMessageBox.Yes, QMessageBox.No)
+        if self.language == 'English':
+            valid = QMessageBox.question(
+                self, '', "Do you really want to delete alarms with time(s): " + ", ".join(ids),
+                QMessageBox.Yes, QMessageBox.No)
+        elif self.language == 'Russian':
+            valid = QMessageBox.question(
+                self, '', "Вы действительно хотите удалить будильники со времен(ем/ами): " + ", ".join(ids),
+                QMessageBox.Yes, QMessageBox.No)
         # Если пользователь ответил утвердительно, удаляем элементы.
         # Не забываем зафиксировать изменения
         if valid == QMessageBox.Yes:
@@ -377,17 +409,23 @@ class MainWindow(QMainWindow):
 
     # метод для показывания окна выбора часов
     def show_select_clock(self):
-        self.window = ClockSelect(self.theme)
+        self.window = ClockSelect(self.theme, self.language)
         self.window.show()
 
     # метод для отрисовки окна "О программе"
     def about_programm(self):
-        self.window = AboutProgramm(self.theme)
+        self.window = AboutProgramm(self.theme, self.language)
         self.window.show()
+
+    def select_language(self):
+        self.window = SelectLanguage(self.theme, self.language)
+        self.window.show()
+        self.language_work = True
+        self.close()
 
     # класс для отрисовки окна выбора тем
     def change_theme(self):
-        self.window = ChangeTheme(self.theme)
+        self.window = ChangeTheme(self.theme, self.language)
         self.window.show()
         self.themes_work = True
         self.close()
@@ -402,10 +440,15 @@ class MainWindow(QMainWindow):
         
     # обрабатываем событие закрытия
     def closeEvent(self, event):
-        if not self.themes_work:
-            valid = QMessageBox.question(
-                self, '', "Do you really want to quit?",
-                QMessageBox.Yes, QMessageBox.No)
+        if not self.themes_work and not self.language_work:
+            if self.language == 'English':
+                valid = QMessageBox.question(
+                    self, '', "Do you really want to quit?",
+                    QMessageBox.Yes, QMessageBox.No)
+            elif self.language == 'Russian':
+                valid = QMessageBox.question(
+                    self, '', "Вы действительно хотите выйти?",
+                    QMessageBox.Yes, QMessageBox.No)
             # Если пользователь ответил утвердительно - закрываем программу
             if valid == QMessageBox.Yes:
                 event.accept()
@@ -540,6 +583,6 @@ class MainWindow(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MainWindow(selected_theme)
+    ex = MainWindow(selected_theme, selected_language)
     ex.show()
     sys.exit(app.exec_())

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Выберите тему</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow {
@@ -247,7 +247,7 @@ QRadioButton::indicator {
      </rect>
     </property>
     <property name="text">
-     <string>Select</string>
+     <string>Выбрать</string>
     </property>
    </widget>
   </widget>

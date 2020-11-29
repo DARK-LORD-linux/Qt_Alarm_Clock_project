@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ThemesWindow</class>
- <widget class="QMainWindow" name="ThemesWindow">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>920</width>
-    <height>441</height>
+    <width>511</width>
+    <height>302</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Select melody</string>
+   <string>Будильник</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget {
-  background-color: rgba(25, 35, 45, 100);
+  background-color: rgba(25, 35, 45, 50);
   border: 0px solid #32414B;
   padding: 0px;
   color: #F0F0F0;
@@ -272,6 +272,45 @@ QRadioButton QWidget {
   padding: 0px;
   outline: none;
   border: none;
+}
+
+QRadioButton::indicator {
+  border: none;
+  outline: none;
+  margin-left: 4px;
+  height: 16px;
+  width: 16px;
+}
+
+QRadioButton::indicator:unchecked {
+  image: url(&quot;:/qss_icons/rc/radio_unchecked.png&quot;);
+}
+
+QRadioButton::indicator:unchecked:hover, QRadioButton::indicator:unchecked:focus, QRadioButton::indicator:unchecked:pressed {
+  border: none;
+  outline: none;
+  image: url(&quot;:/qss_icons/rc/radio_unchecked_focus.png&quot;);
+}
+
+QRadioButton::indicator:unchecked:disabled {
+  image: url(&quot;:/qss_icons/rc/radio_unchecked_disabled.png&quot;);
+}
+
+QRadioButton::indicator:checked {
+  border: none;
+  outline: none;
+  image: url(&quot;:/qss_icons/rc/radio_checked.png&quot;);
+}
+
+QRadioButton::indicator:checked:hover, QRadioButton::indicator:checked:focus, QRadioButton::indicator:checked:pressed {
+  border: none;
+  outline: none;
+  image: url(&quot;:/qss_icons/rc/radio_checked_focus.png&quot;);
+}
+
+QRadioButton::indicator:checked:disabled {
+  outline: none;
+  image: url(&quot;:/qss_icons/rc/radio_checked_disabled.png&quot;);
 }
 
 /* QMenuBar ---------------------------------------------------------------
@@ -789,7 +828,7 @@ https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qframe
 
 --------------------------------------------------------------------------- */
 QLabel {
-  background-color: #19232D;
+  background-color: rgba(25, 35, 45, 0);
   border: 0px solid #32414B;
   padding: 2px;
   margin: 0px;
@@ -2086,89 +2125,86 @@ QAbstractView:selected {
 PlotWidget {
   /* Fix cut labels in plots #134 */
   padding: 0px;
-}
-
-QRadioButton::indicator {
-    width: 13px;
-    height: 13px;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QPushButton" name="close_window_button">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>441</width>
-      <height>301</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>20</y>
-      <width>451</width>
-      <height>301</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="light_theme_button">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>330</y>
-      <width>112</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Light_theme</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-    <attribute name="buttonGroup">
-     <string notr="true">buttonGroup</string>
-    </attribute>
-   </widget>
-   <widget class="QRadioButton" name="dark_theme_button">
-    <property name="geometry">
-     <rect>
-      <x>630</x>
-      <y>330</y>
-      <width>112</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Dark_theme</string>
-    </property>
-    <attribute name="buttonGroup">
-     <string notr="true">buttonGroup</string>
-    </attribute>
-   </widget>
-   <widget class="QPushButton" name="select_button">
-    <property name="geometry">
-     <rect>
-      <x>800</x>
-      <y>370</y>
+      <x>190</x>
+      <y>240</y>
       <width>94</width>
       <height>37</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
     <property name="text">
-     <string>Select</string>
+     <string>ОК</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>50</y>
+      <width>181</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="message">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>60</y>
+      <width>321</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'JetBrains Mono'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;gijoeirjgioserg&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="time">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>7</y>
+      <width>341</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
     </property>
    </widget>
   </widget>
@@ -2176,7 +2212,4 @@ QRadioButton::indicator {
  </widget>
  <resources/>
  <connections/>
- <buttongroups>
-  <buttongroup name="buttonGroup"/>
- </buttongroups>
 </ui>
